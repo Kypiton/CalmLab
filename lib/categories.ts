@@ -1,0 +1,1 @@
+export const categories: string[] = ['All', 'Recovery', 'Relax', 'Sleep', 'Focus'] as const;

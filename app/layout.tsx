@@ -1,15 +1,10 @@
 import type { Metadata } from 'next';
-import { Roboto, Geist } from 'next/font/google';
+import { Geist } from 'next/font/google';
 import './globals.css';
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
+import { Header } from '@/components/shared';
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const roboto = Roboto({
-  subsets: ['latin'],
-  variable: '--font-geist-sans',
-  weight: ['400', '500', '700'],
-});
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,9 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang='en' className={cn("h-full", "antialiased", roboto.variable, "font-sans", geist.variable)}>
-      <body className='bg-amber-950' suppressHydrationWarning>
-        {children}
+    <html
+      suppressHydrationWarning
+      lang='en'
+      className={cn('w-[95%] m-auto', 'antialiased', 'font-sans', geist.variable)}
+    >
+      <body className='bg-[#eef7f1]' suppressHydrationWarning>
+        <Header />
+        <main>{children}</main>
       </body>
     </html>
   );
