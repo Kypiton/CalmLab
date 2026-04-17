@@ -1,3 +1,5 @@
+'use client';
+
 import { Hero, Products } from '@/components/shared';
 
 export default function Home() {

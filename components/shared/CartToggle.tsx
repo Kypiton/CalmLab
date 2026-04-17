@@ -54,7 +54,7 @@ export const CartToggle: React.FC<Props> = ({ className }) => {
             <DrawerTitle>Shopping Cart</DrawerTitle>
             <DrawerDescription>Number of products: {cartItems.length}</DrawerDescription>
           </DrawerHeader>
-          <div className='flex flex-col flex-1'>
+          <div className='flex flex-col h-137.5'>
             <div className='overflow-auto flex-1'>
               {cartItems.length ? (
                 cartItems.map(({ id, title, image, price, brand, quantity }) => {
@@ -117,7 +117,9 @@ export const CartToggle: React.FC<Props> = ({ className }) => {
                 Continue Shopping
               </Button>
             </DrawerClose>
-            <Button variant='destructive' onClick={clearCart}>Clear Cart</Button>
+            <Button variant='destructive' onClick={clearCart}>
+              Clear Cart
+            </Button>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>

@@ -3,7 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import { CartItem } from '../types/cart-item.type'
 import { ProductItem } from '@/types/product-item.type';
 
-type Product = Omit<ProductItem, 'description' | 'category' | 'rating'>;
+export type Product = Omit<ProductItem, 'description' | 'category' | 'rating'>;
 
 interface Cart {
 	cartItems: CartItem[];

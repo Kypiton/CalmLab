@@ -1,3 +1,4 @@
+export { CheckoutForm } from './CheckoutForm'
 export { SearchToggle } from './SearchToggle'
 export { ProductCard } from './ProductCard'
 export { Navigation } from './Navigation'
