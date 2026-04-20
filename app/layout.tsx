@@ -24,7 +24,6 @@ export default function RootLayout({
       className={cn('w-[95%] m-auto', 'antialiased', 'font-sans', geist.variable)}
     >
       <body className='bg-[#eef7f1]' suppressHydrationWarning>
-        <Header />
         <main>{children}</main>
         <Toaster />
       </body>

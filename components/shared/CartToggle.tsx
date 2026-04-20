@@ -19,27 +19,19 @@ import { Counter } from './';
 import { Badge } from '../ui/badge';
 import { Separator } from '../ui/separator';
 import { useCart } from '@/store/cart';
+import Link from 'next/link';
+import { useTotal } from '@/hooks/useTotal';
 
 interface Props {
   className?: string;
 }
 
 export const CartToggle: React.FC<Props> = ({ className }) => {
-  const cartItems = useCart(state => state.cartItems);
+  const { total, subtotal, shipping, cartItems } = useTotal();
   const removeFromCart = useCart(state => state.removeFromCart);
   const clearCart = useCart(state => state.clearCart);
   const incrementQuantity = useCart(state => state.incrementQuantity);
   const decrementQuantity = useCart(state => state.decrementQuantity);
-
-  const subtotal = Number(
-    cartItems.reduce((acc, item) => (acc += item.price * item.quantity), 0).toFixed(2),
-  );
-  const shipping = 4.99;
-  const total = Number(subtotal + shipping).toFixed(2);
-
-  React.useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
 
   return (
     <>
@@ -110,7 +102,19 @@ export const CartToggle: React.FC<Props> = ({ className }) => {
             </div>
           </div>
           <DrawerFooter>
-            <Button>Proceed to Checkout</Button>
+            <DrawerClose asChild>
+              <Link
+                href='/checkout'
+                className={`block ${!cartItems.length ? 'cursor-not-allowed' : ''}`}
+                onClick={e => {
+                  !cartItems.length ? e.preventDefault() : undefined;
+                }}
+              >
+                <Button className='w-full' disabled={!cartItems.length}>
+                  Proceed to Checkout
+                </Button>
+              </Link>
+            </DrawerClose>
             <DrawerClose asChild>
               <Button variant='outline'>
                 <ArrowLeft />

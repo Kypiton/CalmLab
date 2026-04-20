@@ -9,7 +9,7 @@ interface Props {
   onDecrement: (id: number) => void;
 }
 
-export const Counter: React.FC<Props> = ({ className, value = 1, onDecrement, onIncrement }) => {
+export const Counter: React.FC<Props> = ({ className, value, onDecrement, onIncrement }) => {
   return (
     <div className='flex items-center'>
       <Button variant='default' onClick={() => onDecrement(1)} disabled={value <= 1}>

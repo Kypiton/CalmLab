@@ -1,10 +1,11 @@
 'use client';
 
-import { Hero, Products } from '@/components/shared';
+import { Header, Hero, Products } from '@/components/shared';
 
 export default function Home() {
   return (
     <>
+      <Header />
       <Hero />
       <Products />
     </>
