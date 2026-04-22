@@ -7,7 +7,6 @@ import { useTotal } from '@/hooks/useTotal';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 interface Props {
   className?: string;
@@ -15,6 +14,23 @@ interface Props {
 
 export default function Checkout({ className }: Props) {
   const { total, subtotal, shipping, cartItems } = useTotal();
+
+  const cartOfIdAndQuantity = cartItems.map(item => ({
+    id: item.id,
+    quantity: item.quantity,
+  }));
+
+  async function postCart() {
+    const response = await fetch('/api/checkout_sessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cartOfIdAndQuantity),
+    });
+
+    const data = await response.json();
+    window.location.href = data.url;
+  }
+
   return (
     <div className={cn('mt-10', className)}>
       <h1 className='text-4xl font-extrabold text-primary text-center'>Checkout</h1>
@@ -72,10 +88,9 @@ export default function Checkout({ className }: Props) {
             <p className='text-xl font-bold text-primary'>Total</p>
             <p>${total}</p>
           </div>
-          <Link href='/checkout' className='block mt-2'>
-            <Button className='w-full'>Pay with stripe</Button>
-          </Link>
-
+          <Button className='w-full mt-2' onClick={postCart}>
+            Pay with stripe
+          </Button>
           <Button variant='outline' className='mt-2'>
             <Link href='/'>Back to shopping</Link>
           </Button>

@@ -79,7 +79,9 @@ export const CartToggle: React.FC<Props> = ({ className }) => {
                   );
                 })
               ) : (
-                <p className='text-2xl text-center text-destructive'>Add products to your cart!</p>
+                <p className='mt-40 text-2xl text-center text-destructive'>
+                  Add products to your cart!
+                </p>
               )}
             </div>
             <div className='mx-4 bottom-0 left-0 right-0'>
