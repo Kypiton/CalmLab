@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { CartItem } from '../types/cart-item.type'
-import { ProductItem } from '@/types/product-item.type';
+import { CartItem } from '../types/cart-item'
+import { ProductItem } from '@/types/product-item';
 
 export type Product = Omit<ProductItem, 'description' | 'category' | 'rating'>;
 

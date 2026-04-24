@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import Image from 'next/image';
-import { ProductItem } from '@/types/product-item.type';
+import { ProductItem } from '@/types/product-item';
 import { Product, useCart } from '@/store/cart';
 import { toast } from 'sonner';
 

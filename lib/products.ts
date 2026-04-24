@@ -1,4 +1,4 @@
-import { ProductItem } from '@/types/product-item.type';
+import { ProductItem } from '@/types/product-item';
 
 export const products: ProductItem[] = [
 	{

@@ -1,0 +1,18 @@
+[
+  {
+    "stripeSessionId": "cs_test_b173IhH3fn7u1xSWnidozE4vGjNQgv13NS5Y62CwBQOLnolSUxjqvoh7Dg",
+    "customerEmail": "123123213@gmail.com",
+    "total": 504.98,
+    "status": "paid",
+    "createdAt": "Fri Apr 24 2026 12:57:52",
+    "items": [
+      {
+        "id": 1,
+        "title": "Omega-3 950 MG Triple Strength",
+        "image": "/products/omega-3.png",
+        "price": 499.99,
+        "quantity": 1
+      }
+    ]
+  }
+]

@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
 					unit_amount: Math.round(product.price * 100),
 					product_data: {
 						name: product.title,
-						// images: [],
 					},
 				},
 				quantity: item.quantity
@@ -50,7 +49,6 @@ export async function POST(req: NextRequest) {
 				unit_amount: 499,
 				product_data: {
 					name: 'Delivery',
-					// images: ['']
 				},
 			},
 			quantity: 1

@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select';
 import { ProductCard, Category } from './';
 import { products } from '@/lib/products';
-import { ProductItem } from '@/types/product-item.type';
+import { ProductItem } from '@/types/product-item';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Input } from '../ui/input';
 import { X } from 'lucide-react';
