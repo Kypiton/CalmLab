@@ -98,7 +98,7 @@ export const SuccessPage: React.FC<Props> = ({ className, sessionId, customerEma
           <Separator className='mt-2' />
           <div className='flex items-center justify-between text-gray-700 mt-4'>
             <p>Subtotal</p>
-            <p>${subtotal}</p>
+            <p>${subtotal.toFixed(2)}</p>
           </div>
           <div className='flex items-center justify-between mt-4 text-gray-700'>
             <p>Shipping</p>
