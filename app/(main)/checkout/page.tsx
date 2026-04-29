@@ -7,6 +7,7 @@ import { useTotal } from '@/hooks/useTotal';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 interface Props {
   className?: string;
@@ -30,6 +31,8 @@ export default function Checkout({ className }: Props) {
     const data = await response.json();
     window.location.href = data.url;
   }
+
+  if (!cartItems.length) redirect('/');
 
   return (
     <div className={cn('mt-10', className)}>

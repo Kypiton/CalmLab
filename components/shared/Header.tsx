@@ -1,9 +1,9 @@
 import React from 'react';
-import { Package, User } from 'lucide-react';
+import { LogOut, Package, User } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 
-import { CartToggle, Logo, Navigation, SearchToggle } from './';
+import { CartToggle, Logo, LogOutButton, Navigation, SearchToggle } from './';
 import Link from 'next/link';
 
 interface Props {
@@ -22,6 +22,9 @@ export const Header: React.FC<Props> = ({ className }) => {
         <Link href='/orders'>
           <Package size={20} className='cursor-pointer ml-2' />
         </Link>
+        <LogOutButton>
+          <LogOut size={20} className='cursor-pointer ml-2' />
+        </LogOutButton>
       </div>
     </div>
   );

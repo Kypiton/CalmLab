@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation';
 
 import { ClearCart } from '@/components/shared/ClearCart';
 import { SuccessPage } from '@/components/shared';
+import { getCurrentUser } from '@/lib/auth';
 
 type SuccessPageProps = {
   searchParams: Promise<{
@@ -12,6 +13,10 @@ type SuccessPageProps = {
 
 export default async function Success({ searchParams }: SuccessPageProps) {
   const { session_id } = await searchParams;
+
+  const user = await getCurrentUser();
+
+  if (!user) redirect('/sign-in');
 
   if (!session_id) throw new Error('Please provide a valid session_id (`cs_test_...`)');
 

@@ -20,7 +20,7 @@ export default function RootLayout({
     <html
       suppressHydrationWarning
       lang='en'
-      className={cn('w-[95%] m-auto', 'antialiased', 'font-sans', geist.variable)}
+      className={cn('', 'antialiased', 'font-sans', geist.variable)}
     >
       <body className='bg-[#eef7f1]' suppressHydrationWarning>
         <main>{children}</main>
