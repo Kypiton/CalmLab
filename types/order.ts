@@ -11,6 +11,6 @@ export interface Order {
 	customerEmail: string | null;
 	total: number;
 	status: "no_payment_required" | "paid" | "unpaid"
-	createdAt: string;
+	createdAt: Date;
 	items: Items[];
 }

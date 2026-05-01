@@ -1407,5 +1407,35 @@
         "quantity": 1
       }
     ]
+  },
+  {
+    "stripeSessionId": "cs_test_b1b3kFEZpgI9BgT9tbjok1lf2576WCXN6A2QBRnOBCjzCfaxjRLCLSOEhs",
+    "customerEmail": "partytimeyep@gmail.com",
+    "total": 1204.96,
+    "status": "paid",
+    "createdAt": "Fri May 01 2026 09:58:03",
+    "items": [
+      {
+        "id": 1,
+        "title": "Omega-3 950 MG Triple Strength",
+        "image": "/products/omega-3.png",
+        "price": 499.99,
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "title": "Biotin 5000 mcg",
+        "image": "/products/biotin.png",
+        "price": 299.99,
+        "quantity": 1
+      },
+      {
+        "id": 3,
+        "title": "Magnesium + B6",
+        "image": "/products/magnesium-b6.png",
+        "price": 399.99,
+        "quantity": 1
+      }
+    ]
   }
 ]

@@ -1,5 +1,3 @@
-import { CheckoutItem } from '@/app/api/checkout_sessions/route';
-import { products } from '@/lib/products';
 import { cn } from '@/lib/utils';
 import { Check, Flower2, Leaf, Mail, TreePalm } from 'lucide-react';
 
@@ -15,15 +13,15 @@ interface Props {
   className?: string;
   sessionId: string;
   customerEmail: string;
-  metadata: string;
+  items: any[];
 }
 
-export const SuccessPage: React.FC<Props> = ({ className, sessionId, customerEmail, metadata }) => {
-  const metaItems = JSON.parse(metadata);
-  const items = metaItems.map((item: CheckoutItem) => {
-    const product = products.find(product => product.id === item.id);
-    return { ...product, quantity: item.quantity };
-  });
+export const SuccessPage: React.FC<Props> = async ({
+  className,
+  sessionId,
+  customerEmail,
+  items,
+}) => {
   const brand_new_items = [
     ...items,
     {

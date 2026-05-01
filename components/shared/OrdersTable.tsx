@@ -111,8 +111,8 @@ export const OrdersTable: React.FC<Props> = ({ className, orders }) => {
                   </p>
                 </td>
                 <td className='p-2'>
-                  <p>{order.createdAt.slice(0, 15)}</p>
-                  <p>{order.createdAt.slice(16)}</p>
+                  <p>{order.createdAt.toLocaleString('default', { month: 'long' })}</p>
+                  <p>{order.createdAt.getFullYear()}</p>
                 </td>
                 <td className='p-2'>
                   <div

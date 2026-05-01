@@ -1,3 +1,4 @@
+import { products } from '@/lib/products';
 import { PrismaClient, Prisma } from "../app/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
@@ -10,26 +11,30 @@ const prisma = new PrismaClient({
 	adapter,
 });
 
-const userData: Prisma.UserCreateInput[] = [
-	{
-		firstName: "Dan",
-		lastName: 'Glushchenko',
-		email: "testemail@gmail.com",
-		password: 'qwerty123'
+// const userData: Prisma.UserCreateInput[] = [
+// 	{
+// 		firstName: "Dan",
+// 		lastName: 'Glushchenko',
+// 		email: "testemail@gmail.com",
+// 		password: 'qwerty123'
 
-	},
-	{
-		firstName: "Alex",
-		lastName: 'Semenov',
-		email: "alexo@gmail.com",
-		password: 'zxcvb123'
+// 	},
+// 	{
+// 		firstName: "Alex",
+// 		lastName: 'Semenov',
+// 		email: "alexo@gmail.com",
+// 		password: 'zxcvb123'
 
-	},
-];
+// 	},
+// ];
+
+const productData = [...products]
 
 export async function main() {
-	for (const u of userData) {
-		await prisma.user.create({ data: u });
+	await prisma.product.deleteMany();
+	
+	for (const u of productData) {
+		await prisma.product.create({ data: u });
 	}
 }
 

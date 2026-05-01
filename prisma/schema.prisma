@@ -8,13 +8,77 @@ datasource db {
 }
 
 model User { 
-  id        Int     @id @default(autoincrement()) 
+  id        Int      @id @default(autoincrement()) 
 
   firstName String
   lastName  String
-  email     String  @unique
+  email     String   @unique
   password  String
+
+  orders    Order[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 } 
+
+enum CategoryType {
+  recovery
+  relax
+  sleep
+  focus
+}
+
+model Product {
+  id          Int      @id @default(autoincrement()) 
+
+	title       String
+	description String
+	image       String
+	price       Float
+	brand       String
+	rating      Float
+	category    CategoryType 
+
+  orderItems  OrderItem[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+}
+
+enum OrderStatusType {
+  no_payment_required
+  paid
+  unpaid
+}
+
+model Order {
+  id              Int      @id @default(autoincrement()) 
+
+  stripeSessionId String   @unique
+	customerEmail   String
+	total           Float
+	status          OrderStatusType
+
+  userId          Int
+  user            User     @relation(fields: [userId], references: [id])
+
+	items           OrderItem[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt @default(now())
+}
+
+model OrderItem {
+  id              Int      @id @default(autoincrement()) 
+
+  orderId         Int
+  order           Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId       Int?
+  product         Product? @relation(fields: [productId], references: [id])
+
+	title           String
+	image           String
+	price           Float
+	quantity        Int
+}

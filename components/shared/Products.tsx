@@ -13,7 +13,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ProductCard, Category } from './';
-import { products } from '@/lib/products';
 import { ProductItem } from '@/types/product-item';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Input } from '../ui/input';
@@ -21,9 +20,10 @@ import { X } from 'lucide-react';
 
 interface Props {
   className?: string;
+  products: ProductItem[];
 }
 
-export const Products: React.FC<Props> = ({ className }) => {
+export const Products: React.FC<Props> = ({ className, products }) => {
   const [searchValue, setSearchValue] = React.useState<string>('');
   const router = useRouter();
   const searchParams = useSearchParams();

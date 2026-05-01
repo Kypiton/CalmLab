@@ -1,4 +1,5 @@
-export type CategoryType = 'all' | 'recovery' | 'relax' | 'sleep' | 'focus';
+export type CategoryType = 'recovery' | 'relax' | 'sleep' | 'focus';
+export type CategoryFilter = 'all' | CategoryType;
 
 export interface ProductItem {
 	id: number;

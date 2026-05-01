@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation';
 import { ClearCart } from '@/components/shared/ClearCart';
 import { SuccessPage } from '@/components/shared';
 import { getCurrentUser } from '@/lib/auth';
+import { CheckoutItem } from '@/app/api/checkout_sessions/route';
+import prisma from '@/lib/prisma';
 
 type SuccessPageProps = {
   searchParams: Promise<{
@@ -31,10 +33,25 @@ export default async function Success({ searchParams }: SuccessPageProps) {
   if (session.status === 'complete') {
     const customerEmail = session.customer_details?.email || 'No email provided';
     const metadata = session.metadata?.data || '';
+    const metaItems = JSON.parse(metadata);
+    const items = await Promise.all(
+      metaItems.map(async (item: CheckoutItem) => {
+        const product = await prisma.product.findUnique({
+          where: {
+            id: item.id,
+          },
+        });
+        return { ...product, quantity: item.quantity };
+      }),
+    );
 
     return (
       <section id='success'>
-        <SuccessPage metadata={metadata} sessionId={session.id} customerEmail={customerEmail} />
+        <SuccessPage
+          sessionId={session.id}
+          customerEmail={customerEmail}
+          items={items}
+        />
         <ClearCart />
       </section>
     );

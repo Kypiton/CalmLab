@@ -3,16 +3,19 @@ import { readFileSync } from 'fs';
 import { OrdersTable } from '@/components/shared';
 import { getCurrentUser } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import prisma from '@/lib/prisma';
 
 interface Props {
   className?: string;
 }
 
 export default async function Orders({ className }: Props) {
-  const pathName = `${process.cwd()}/lib/orders.json`;
-  const data = readFileSync(pathName, 'utf8');
-  const orders = JSON.parse(data);
   const user = await getCurrentUser();
+  const orders = await prisma.order.findMany({
+    where: { userId: user?.id },
+    include: { items: true },
+    orderBy: { createdAt: 'desc' },
+  });
 
   if (!user) {
     redirect('/sign-in');

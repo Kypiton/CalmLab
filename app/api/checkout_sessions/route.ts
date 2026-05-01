@@ -3,7 +3,8 @@ import { headers } from 'next/headers'
 
 import { stripe } from '@/lib/stripe'
 
-import { products } from '@/lib/products'
+import prisma from '@/lib/prisma';
+import { getCurrentUser } from '@/lib/auth';
 
 export interface CheckoutItem {
 	id: number;
@@ -15,6 +16,7 @@ export async function POST(req: NextRequest) {
 		const headersList = await headers()
 		const origin = headersList.get('origin')
 		const data = await req.json()
+		const user = await getCurrentUser()
 
 		if (!origin) {
 			throw new Error('URL (origin) not found')
@@ -24,24 +26,30 @@ export async function POST(req: NextRequest) {
 			throw new Error('Array is empty')
 		}
 
-		const line_items = data.map((item: CheckoutItem) => {
-			const product = products.find(product => product.id === item.id)
+		const line_items = await Promise.all(
+			data.map(async (item: CheckoutItem) => {
+				const product = await prisma.product.findUnique({
+					where: {
+						id: item.id
+					}
+				})
 
-			if (!product) {
-				throw new Error('Product not found')
-			}
+				if (!product) {
+					throw new Error('Product not found')
+				}
 
-			return {
-				price_data: {
-					currency: 'usd',
-					unit_amount: Math.round(product.price * 100),
-					product_data: {
-						name: product.title,
+				return {
+					price_data: {
+						currency: 'usd',
+						unit_amount: Math.round(product.price * 100),
+						product_data: {
+							name: product.title,
+						},
 					},
-				},
-				quantity: item.quantity
-			}
-		})
+					quantity: item.quantity
+				}
+			})
+		)
 
 		line_items.push({
 			price_data: {
@@ -61,6 +69,7 @@ export async function POST(req: NextRequest) {
 			cancel_url: `${origin}/checkout`,
 			metadata: {
 				data: JSON.stringify(data),
+				userId: String(user?.id)
 			},
 		});
 
