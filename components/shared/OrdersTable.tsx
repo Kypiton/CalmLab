@@ -4,20 +4,11 @@ import { Order } from '@/types/order';
 import React from 'react';
 
 import Image from 'next/image';
-
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/ui/pagination';
+import { PaginationPage } from './PaginationPage';
 
 interface Props {
   className?: string;
-  orders: Order[];
+  orders: Order[]
 }
 
 export const OrdersTable: React.FC<Props> = ({ className, orders }) => {
@@ -27,48 +18,6 @@ export const OrdersTable: React.FC<Props> = ({ className, orders }) => {
   const start = (currentPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
   const newOrders = orders.slice(start, end);
-  const pages: number[] = [];
-  let pagesWithDots: (number | string)[] = [];
-
-  switch (true) {
-    case currentPage <= 3:
-      pagesWithDots = [1, 2, 3, 'right-ellipsis', totalPages];
-      break;
-    case currentPage >= totalPages - 2:
-      pagesWithDots = [1, 'left-ellipsis', totalPages - 2, totalPages - 1, totalPages];
-      break;
-    case currentPage >= 3 && currentPage < totalPages - 1:
-      pagesWithDots = [
-        1,
-        'left-ellipsis',
-        currentPage - 1,
-        currentPage,
-        currentPage + 1,
-        'right-ellipsis',
-        totalPages,
-      ];
-      break;
-  }
-
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push(i);
-  }
-
-  function prevPage() {
-    if (currentPage !== 1) {
-      setCurrentPage(currentPage => currentPage - 1);
-    }
-  }
-
-  function presentPage(currentPage: number) {
-    setCurrentPage(currentPage);
-  }
-
-  function nextPage() {
-    if (currentPage !== totalPages) {
-      setCurrentPage(currentPage => currentPage + 1);
-    }
-  }
 
   return (
     <div className={className}>
@@ -140,43 +89,11 @@ export const OrdersTable: React.FC<Props> = ({ className, orders }) => {
           })}
         </tbody>
       </table>
-      <Pagination className='mt-4'>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href='#' onClick={prevPage} />
-          </PaginationItem>
-          {totalPages <= 5
-            ? pages.map(page => (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    href='#'
-                    onClick={() => presentPage(page)}
-                    isActive={currentPage === page}
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              ))
-            : pagesWithDots.map(page => (
-                <PaginationItem key={page}>
-                  {typeof page === 'number' ? (
-                    <PaginationLink
-                      href='#'
-                      onClick={() => presentPage(page)}
-                      isActive={currentPage === page}
-                    >
-                      {page}
-                    </PaginationLink>
-                  ) : (
-                    <PaginationEllipsis />
-                  )}
-                </PaginationItem>
-              ))}
-          <PaginationItem>
-            <PaginationNext href='#' onClick={nextPage} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <PaginationPage
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 };

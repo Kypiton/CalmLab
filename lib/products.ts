@@ -1,8 +1,7 @@
 import { ProductItem } from '@/types/product-item';
 
-export const products: ProductItem[] = [
+export const products = [
 	{
-		id: 1,
 		title: 'Omega-3 950 MG Triple Strength',
 		description:
 			'It is a powerful immune booster and helps improve the elasticity of connective tissues.',
@@ -13,7 +12,6 @@ export const products: ProductItem[] = [
 		category: 'recovery',
 	},
 	{
-		id: 2,
 		title: 'Biotin 5000 mcg',
 		description: 'Supports healthy hair, skin, and nails while boosting energy metabolism.',
 		image: '/products/biotin.png',
@@ -23,7 +21,6 @@ export const products: ProductItem[] = [
 		category: 'recovery',
 	},
 	{
-		id: 3,
 		title: 'Magnesium + B6',
 		description: 'Helps reduce stress, supports muscle function, and improves sleep quality.',
 		image: '/products/magnesium-b6.png',
@@ -33,7 +30,6 @@ export const products: ProductItem[] = [
 		category: 'relax',
 	},
 	{
-		id: 4,
 		title: 'Skin, Nails & Hair',
 		description: 'Advanced formula for strengthening hair, improving skin glow, and nail health.',
 		image: '/products/skin-nails-hair.png',
@@ -43,7 +39,6 @@ export const products: ProductItem[] = [
 		category: 'relax',
 	},
 	{
-		id: 5,
 		title: 'Vitamin A 10000 IU',
 		description: 'Supports vision, immune system, and healthy skin regeneration.',
 		image: '/products/vitamin-A.png',
@@ -53,7 +48,6 @@ export const products: ProductItem[] = [
 		category: 'sleep',
 	},
 	{
-		id: 6,
 		title: 'Vitamin C 1000 mg',
 		description: 'Boosts immunity and helps fight oxidative stress in the body.',
 		image: '/products/vitamin-C.png',
@@ -63,7 +57,6 @@ export const products: ProductItem[] = [
 		category: 'sleep',
 	},
 	{
-		id: 7,
 		title: 'Vitamin D3 2000 IU',
 		description: 'Supports bone health, immune system, and mood balance.',
 		image: '/products/vitamin-D3.png',
@@ -73,7 +66,24 @@ export const products: ProductItem[] = [
 		category: 'focus',
 	},
 	{
-		id: 8,
+		title: 'Vitamin K2',
+		description: 'Promotes proper calcium absorption and cardiovascular health.',
+		image: '/products/vitamin-K2.png',
+		price: 349.99,
+		brand: 'Now Foods',
+		rating: 2.4,
+		category: 'focus',
+	},
+	{
+		title: 'Vitamin K2',
+		description: 'Promotes proper calcium absorption and cardiovascular health.',
+		image: '/products/vitamin-K2.png',
+		price: 349.99,
+		brand: 'Now Foods',
+		rating: 2.4,
+		category: 'focus',
+	},
+	{
 		title: 'Vitamin K2',
 		description: 'Promotes proper calcium absorption and cardiovascular health.',
 		image: '/products/vitamin-K2.png',

@@ -4,7 +4,7 @@ import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 
 export default async function Home() {
-  const products = await prisma.product.findMany();
+  const products = (await prisma.product.findMany()).slice(0, 8);
   const user = await getCurrentUser();
 
   if (!user) {

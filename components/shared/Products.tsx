@@ -101,7 +101,7 @@ export const Products: React.FC<Props> = ({ className, products }) => {
       </div>
       <div className='grid grid-cols-4 gap-4 mt-4'>
         {sortedProducts.length ? (
-          sortedProducts.map(product => <ProductCard key={product.id} {...product} />)
+          sortedProducts.map((product, i) => <ProductCard key={product.id} {...product} />)
         ) : (
           <p className='text-3xl text-destructive'>Products not found...</p>
         )}

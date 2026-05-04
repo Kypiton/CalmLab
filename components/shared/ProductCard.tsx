@@ -46,8 +46,10 @@ export const ProductCard: React.FC<Props> = ({
   }
 
   return (
-    <Card className='w-full max-w-sm flex flex-col'>
-      <Image src={image} alt={title} width={250} height={250} className='mx-auto' />
+    <Card className='w-full max-w-sm flex flex-col h-full'>
+      <div className='flex items-center justify-center w-full h-50'>
+        <img src={image} alt={title} className='mx-auto max-w-full max-h-full object-contain' />
+      </div>
       <CardHeader className='flex-1'>
         <CardAction>
           <Badge variant='secondary'>{brand}</Badge>
@@ -56,7 +58,7 @@ export const ProductCard: React.FC<Props> = ({
         <CardDescription>{description}</CardDescription>
         <Rating name='half-rating' defaultValue={rating} precision={0.1} readOnly />
       </CardHeader>
-      <CardFooter className='flex items-center justify-between'>
+      <CardFooter className='flex items-center justify-between mt-auto'>
         <Button variant='default' onClick={() => handleAddToCart(productItem)}>
           Add to Cart
         </Button>

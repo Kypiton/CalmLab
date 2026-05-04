@@ -19,5 +19,9 @@ export const navigation: NavigationItem[] = [
 	{
 		title: 'Focus',
 		href: '/focus'
+	},
+	{
+		title: 'Products',
+		href: '/allproducts'
 	}
 ];

@@ -3,6 +3,7 @@ import React from 'react';
 
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 interface Props {
   className?: string;
@@ -18,7 +19,7 @@ export const Hero: React.FC<Props> = ({ className }) => {
           Discover amazing content and connect with like-minded individuals.
         </p>
         <Button className='p-6  text-white rounded-lg bg-primary hover:bg-primary/90'>
-          Shop now
+          <Link href='/allproducts'>View All Products</Link>
         </Button>
       </div>
 

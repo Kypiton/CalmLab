@@ -106,14 +106,28 @@ export async function POST(request: NextRequest) {
 								}
 
 								try {
-									const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+									// const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+									const getImageUrl = (image: string) => {
+										const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+
+										let fixedImage = image.trim();
+
+										fixedImage = fixedImage.replace(/^https\/\//, 'https://');
+										fixedImage = fixedImage.replace(/^http\/\//, 'http://');
+
+										if (fixedImage.startsWith('http://') || fixedImage.startsWith('https://')) {
+											return fixedImage;
+										}
+
+										return `${baseUrl}${fixedImage.startsWith('/') ? fixedImage : `/${fixedImage}`}`;
+									};
 									const itemsHtml = items
 										.map(
 											item => `
 													<tr>
 														<td style="padding: 8px;">
 															<img
-																src="${baseUrl}${item.image}" 
+																src="${getImageUrl(item.image)}" 
 																width="50" 
 																height="50" 
 																style="border-radius: 8px; object-fit: cover;"

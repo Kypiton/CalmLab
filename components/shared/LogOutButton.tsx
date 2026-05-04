@@ -6,9 +6,10 @@ import { Button } from '../ui/button';
 
 interface Props {
   children?: React.ReactNode;
+  className: string;
 }
 
-export const LogOutButton: React.FC<Props> = ({ children }) => {
+export const LogOutButton: React.FC<Props> = ({ children, className }) => {
   const router = useRouter();
 
   async function logout() {
@@ -18,8 +19,8 @@ export const LogOutButton: React.FC<Props> = ({ children }) => {
   }
 
   return (
-    <Button variant='ghost' onClick={logout}>
+    <button onClick={logout} className={className}>
       {children}
-    </Button>
+    </button>
   );
 };
