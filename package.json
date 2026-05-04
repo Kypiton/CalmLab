@@ -18,6 +18,7 @@
     "@stripe/stripe-js": "^9.2.0",
     "@types/canvas-confetti": "^1.9.0",
     "@uploadthing/react": "^7.3.3",
+    "@vercel/analytics": "^2.0.1",
     "bcryptjs": "^3.0.3",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
