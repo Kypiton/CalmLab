@@ -1,4 +1,4 @@
-import { ProductItem } from '@/types/product-item';
+import { CategoryType } from '@/app/generated/prisma/enums';
 
 export const products = [
 	{
@@ -9,7 +9,7 @@ export const products = [
 		price: 499.99,
 		brand: 'Solgar',
 		rating: 5,
-		category: 'recovery',
+		category: CategoryType.recovery,
 	},
 	{
 		title: 'Biotin 5000 mcg',
@@ -18,7 +18,7 @@ export const products = [
 		price: 299.99,
 		brand: 'Now Foods',
 		rating: 1,
-		category: 'recovery',
+		category: CategoryType.recovery,
 	},
 	{
 		title: 'Magnesium + B6',
@@ -27,7 +27,7 @@ export const products = [
 		price: 399.99,
 		brand: 'Solgar',
 		rating: 4.6,
-		category: 'relax',
+		category: CategoryType.relax,
 	},
 	{
 		title: 'Skin, Nails & Hair',
@@ -36,7 +36,7 @@ export const products = [
 		price: 459.99,
 		brand: 'Solgar',
 		rating: 1.5,
-		category: 'relax',
+		category: CategoryType.relax,
 	},
 	{
 		title: 'Vitamin A 10000 IU',
@@ -45,7 +45,7 @@ export const products = [
 		price: 249.99,
 		brand: 'Now Foods',
 		rating: 4.3,
-		category: 'sleep',
+		category: CategoryType.sleep,
 	},
 	{
 		title: 'Vitamin C 1000 mg',
@@ -54,7 +54,7 @@ export const products = [
 		price: 279.99,
 		brand: 'Solgar',
 		rating: 4.5,
-		category: 'sleep',
+		category: CategoryType.sleep,
 	},
 	{
 		title: 'Vitamin D3 2000 IU',
@@ -63,7 +63,7 @@ export const products = [
 		price: 319.99,
 		brand: 'Now Foods',
 		rating: 3.5,
-		category: 'focus',
+		category: CategoryType.focus,
 	},
 	{
 		title: 'Vitamin K2',
@@ -72,7 +72,7 @@ export const products = [
 		price: 349.99,
 		brand: 'Now Foods',
 		rating: 2.4,
-		category: 'focus',
+		category: CategoryType.focus,
 	},
 	{
 		title: 'Vitamin K2',
@@ -81,7 +81,7 @@ export const products = [
 		price: 349.99,
 		brand: 'Now Foods',
 		rating: 2.4,
-		category: 'focus',
+		category: CategoryType.focus,
 	},
 	{
 		title: 'Vitamin K2',
@@ -90,6 +90,6 @@ export const products = [
 		price: 349.99,
 		brand: 'Now Foods',
 		rating: 2.4,
-		category: 'focus',
+		category: CategoryType.focus,
 	}
 ];

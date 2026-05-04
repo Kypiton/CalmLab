@@ -1,5 +1,5 @@
 import { products } from '@/lib/products';
-import { PrismaClient, Prisma } from "../app/generated/prisma/client";
+import { PrismaClient } from "../app/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import "dotenv/config";
 
@@ -32,7 +32,7 @@ const productData = [...products]
 
 export async function main() {
 	await prisma.product.deleteMany();
-	
+
 	for (const u of productData) {
 		await prisma.product.create({ data: u });
 	}
