@@ -9,6 +9,7 @@ import { PaginationPage } from '../shared/PaginationPage';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { deleteProduct } from '@/lib/action';
 
 interface Props {
   className?: string;
@@ -119,10 +120,12 @@ export const ProductsAdmin: React.FC<Props> = ({ className, products }) => {
                 <td className='p-2'>
                   <div className='flex items-center justify-start gap-2'>
                     <div className='p-3 border border-gray-400 rounded-xl cursor-pointer text-gray-400'>
-                      <Pencil size={20} />
+                      <Link href={`/admin/products/${product.id}/edit`}>
+                        <Pencil size={20} />
+                      </Link>
                     </div>
                     <div className='p-3 rounded-xl cursor-pointer text-red-600 bg-red-200'>
-                      <Trash2 size={20} />
+                      <Trash2 size={20} onClick={() => deleteProduct(product.id)} />
                     </div>
                   </div>
                 </td>

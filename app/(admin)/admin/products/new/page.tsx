@@ -1,5 +1,4 @@
 import { NewProduct } from '@/components/admin';
-import prisma from '@/lib/prisma';
 
 interface Props {
   className?: string;
