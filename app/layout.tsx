@@ -27,13 +27,21 @@ export const metadata: Metadata = {
     siteName: 'CalmLab',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://calmlabshop.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'CalmLab wellness supplements store',
       },
     ],
     type: 'website',
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CalmLab — Wellness Supplements Store',
+    description:
+      'A modern e-commerce store for wellness supplements, vitamins, recovery, sleep, focus and relaxation products.',
+    images: ['https://calmlabshop.com/og-image.png'],
   },
 
   robots: {
