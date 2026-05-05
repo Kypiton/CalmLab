@@ -47,11 +47,7 @@ export default async function Success({ searchParams }: SuccessPageProps) {
 
     return (
       <section id='success'>
-        <SuccessPage
-          sessionId={session.id}
-          customerEmail={customerEmail}
-          items={items}
-        />
+        <SuccessPage sessionId={session.id} customerEmail={customerEmail} items={items} />
         <ClearCart />
       </section>
     );

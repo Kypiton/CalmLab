@@ -1,6 +1,5 @@
 import { EditProduct } from '@/components/admin';
 import prisma from '@/lib/prisma';
-import React from 'react';
 
 interface Props {
   className?: string;

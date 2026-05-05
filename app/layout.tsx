@@ -9,8 +9,37 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'CalmLab',
-  description: 'E-commerce store for vitamins and wellness supplements',
+  metadataBase: new URL('https://calmlabshop.com'),
+
+  title: {
+    default: 'CalmLab — Wellness Supplements Store',
+    template: '%s | CalmLab',
+  },
+
+  description:
+    'CalmLab is a modern e-commerce store for wellness supplements, vitamins, recovery, sleep, focus and relaxation products.',
+
+  openGraph: {
+    title: 'CalmLab — Wellness Supplements Store',
+    description:
+      'A modern e-commerce store for wellness supplements, vitamins, recovery, sleep, focus and relaxation products.',
+    url: 'https://calmlabshop.com',
+    siteName: 'CalmLab',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'CalmLab wellness supplements store',
+      },
+    ],
+    type: 'website',
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
