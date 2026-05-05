@@ -4,7 +4,6 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { Toaster } from '@/components/ui/sonner';
 import { Analytics } from '@vercel/analytics/next';
-import { GoogleAnalytics } from '@next/third-parties/google';
 
 const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -28,7 +27,6 @@ export default function RootLayout({
         <main>{children}</main>
         <Toaster />
         <Analytics />
-        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
       </body>
     </html>
   );
