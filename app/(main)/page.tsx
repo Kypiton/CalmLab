@@ -1,18 +1,20 @@
 import { Header, Hero, Products } from '@/components/shared';
+import { getCurrentUser } from '@/lib/auth';
 import prisma from '@/lib/prisma';
-
-export const dynamic = 'force-dynamic';
+import { redirect } from 'next/navigation';
 
 export default async function Home() {
-  const products = await prisma.product.findMany({
-    take: 8,
-  });
+  const products = (await prisma.product.findMany()).slice(0, 8);
+  const user = await getCurrentUser();
 
-  return (
-    <>
-      <Header />
-      <Hero />
-      <Products products={products} />
-    </>
-  );
+  if (!user) {
+    redirect('/sign-in');
+  } else
+    return (
+      <>
+        <Header />
+        <Hero />
+        <Products products={products} />
+      </>
+    );
 }
