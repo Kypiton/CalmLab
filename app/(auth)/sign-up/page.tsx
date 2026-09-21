@@ -11,12 +11,9 @@ import { MyUser } from '@/types/auth';
 import { Eye, EyeOff, LockKeyhole, Mail, User } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { toast } from 'sonner';
 
-interface Props extends MyUser {
-  className?: string;
-}
-
-export default function SignUp({ className }: Props) {
+export default function SignUp() {
   const router = useRouter();
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -27,7 +24,6 @@ export default function SignUp({ className }: Props) {
   const [confirmPassword, setConfirmPassword] = React.useState('');
   const [agreement, setAgreement] = React.useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState('');
   const [error, setError] = React.useState({
     firstName: '',
     lastName: '',
@@ -69,13 +65,13 @@ export default function SignUp({ className }: Props) {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(`Error message: ${res.statusText}! status: ${res.status}`);
+        throw new Error(data.error || 'Unable to complete request.');
       }
 
-      setIsSuccess(data.message);
+      toast.success(data.message);
       router.push('/sign-in');
     } catch (error) {
-      console.error('Error during POST request:', error);
+      toast.error(error instanceof Error ? error.message : 'Unable to complete request.');
     } finally {
       setIsLoading(false);
     }
@@ -85,7 +81,6 @@ export default function SignUp({ className }: Props) {
     <div
       className={cn(
         'min-h-screen w-[95%] m-auto flex flex-col justify-start items-center py-5',
-        className,
       )}
     >
       <AuthHeader />

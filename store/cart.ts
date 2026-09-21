@@ -56,7 +56,7 @@ export const useCart = create<Cart>()(persist((set) => ({
 		return {
 			cartItems: state.cartItems.map(item => {
 				if (item.id === id) {
-					return { ...item, quantity: item.quantity - 1 }
+					return { ...item, quantity: Math.max(1, item.quantity - 1) }
 				} return item;
 			})
 		}

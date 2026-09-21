@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { ProductItem } from '@/types/product-item';
 import { Product, useCart } from '@/store/cart';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 interface Props extends ProductItem {
   className?: string;
@@ -46,9 +47,9 @@ export const ProductCard: React.FC<Props> = ({
   }
 
   return (
-    <Card className='w-full max-w-sm flex flex-col h-full'>
+    <Card className={cn('w-full max-w-sm flex flex-col h-full', className)}>
       <div className='flex items-center justify-center w-full h-50'>
-        <img src={image} alt={title} className='mx-auto max-w-full max-h-full object-contain' />
+        <Image src={image} alt={title} width={240} height={200} className='mx-auto max-w-full max-h-full object-contain' />
       </div>
       <CardHeader className='flex-1'>
         <CardAction>

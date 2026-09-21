@@ -2,13 +2,12 @@ import { EditProduct } from '@/components/admin';
 import prisma from '@/lib/prisma';
 
 interface Props {
-  className?: string;
   params: Promise<{
     id: string;
   }>;
 }
 
-export default async function ProductsEdit({ className, params }: Props) {
+export default async function ProductsEdit({ params }: Props) {
   const { id } = await params;
   const productId = +id;
 

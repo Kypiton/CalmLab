@@ -13,12 +13,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-interface Props {
-  className?: string;
-}
-
-export default async function Admin({ className }: Props) {
+export default async function Admin() {
   const user = await getCurrentUser();
+  if (!user) redirect('/sign-in');
+  if (user.role !== 'Admin') redirect('/');
   const totalRevenue = await prisma.order.aggregate({
     where: {
       status: 'paid',
@@ -39,7 +37,8 @@ export default async function Admin({ className }: Props) {
 
   const revenue = +(totalRevenue._sum.total ?? 0).toFixed(2);
 
-  const averageOrderValue = +(revenue / totalOrders).toFixed(2);
+  const paidOrders = await prisma.order.count({ where: { status: 'paid' } });
+  const averageOrderValue = paidOrders ? +(revenue / paidOrders).toFixed(2) : 0;
 
   const orders = await prisma.order.findMany();
   const ordersData = orders.map(order => {
@@ -64,16 +63,8 @@ export default async function Admin({ className }: Props) {
     return acc;
   }, [] as { label: string; value: number }[]);
 
-  if (!user) {
-    redirect('/sign-in');
-  }
-
-  if (user.role !== 'Admin') {
-    redirect('/');
-  }
-
   return (
-    <div className={className}>
+    <div>
       <div className='grid grid-cols-4 gap-4 w-full'>
         <MetricCard
           value={`$${revenue}`}

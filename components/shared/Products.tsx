@@ -17,13 +17,15 @@ import { ProductItem } from '@/types/product-item';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Input } from '../ui/input';
 import { X } from 'lucide-react';
+import { PaginationPage } from './PaginationPage';
 
 interface Props {
   className?: string;
   products: ProductItem[];
+  paginated?: boolean;
 }
 
-export const Products: React.FC<Props> = ({ className, products }) => {
+export const Products: React.FC<Props> = ({ className, products, paginated = false }) => {
   const [searchValue, setSearchValue] = React.useState<string>('');
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -57,6 +59,16 @@ export const Products: React.FC<Props> = ({ className, products }) => {
       break;
   }
 
+  const filterKey = JSON.stringify([activeTab, sortOption, searchValue]);
+  const [page, setPage] = React.useState({ key: filterKey, number: 1 });
+  const totalPages = Math.ceil(sortedProducts.length / 12);
+  const currentPage = page.key === filterKey ? Math.min(page.number, Math.max(1, totalPages)) : 1;
+  const visibleProducts = paginated
+    ? sortedProducts.slice((currentPage - 1) * 12, currentPage * 12) : sortedProducts;
+  const setCurrentPage: React.Dispatch<React.SetStateAction<number>> = value => {
+    setPage({ key: filterKey, number: typeof value === 'function' ? value(currentPage) : value });
+  };
+
   function clearSearch() {
     setSearchValue('');
   }
@@ -75,7 +87,7 @@ export const Products: React.FC<Props> = ({ className, products }) => {
           <X className='absolute right-1.5 top-1 cursor-pointer' onClick={clearSearch} />
         </div>
         <Select
-          defaultValue={sortOption}
+          value={sortOption}
           onValueChange={sortValue =>
             router.push(`?category=${activeTab.toLowerCase()}&sort=${sortValue}`, {
               scroll: false,
@@ -101,11 +113,13 @@ export const Products: React.FC<Props> = ({ className, products }) => {
       </div>
       <div className='grid grid-cols-4 gap-4 mt-4'>
         {sortedProducts.length ? (
-          sortedProducts.map((product, i) => <ProductCard key={product.id} {...product} />)
+          visibleProducts.map((product) => <ProductCard key={product.id} {...product} />)
         ) : (
           <p className='text-3xl text-destructive'>Products not found...</p>
         )}
       </div>
+      {paginated && totalPages > 1 && <PaginationPage currentPage={currentPage}
+        totalPages={totalPages} setCurrentPage={setCurrentPage} />}
     </div>
   );
 };

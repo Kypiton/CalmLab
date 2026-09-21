@@ -62,7 +62,7 @@ export const PaginationPage: React.FC<Props> = ({
   }
 
   function nextPage() {
-    if (currentPage !== totalPages) {
+    if (currentPage < totalPages) {
       setCurrentPage(currentPage => currentPage + 1);
     }
   }
@@ -70,14 +70,14 @@ export const PaginationPage: React.FC<Props> = ({
     <Pagination className={cn('mt-4', className)}>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href='#' onClick={prevPage} />
+          <PaginationPrevious href='#' aria-disabled={currentPage <= 1} onClick={event => { event.preventDefault(); prevPage(); }} />
         </PaginationItem>
         {totalPages <= 5
           ? pages.map(page => (
               <PaginationItem key={page}>
                 <PaginationLink
                   href='#'
-                  onClick={() => presentPage(page)}
+                  onClick={event => { event.preventDefault(); presentPage(page); }}
                   isActive={currentPage === page}
                 >
                   {page}
@@ -89,7 +89,7 @@ export const PaginationPage: React.FC<Props> = ({
                 {typeof page === 'number' ? (
                   <PaginationLink
                     href='#'
-                    onClick={() => presentPage(page)}
+                    onClick={event => { event.preventDefault(); presentPage(page); }}
                     isActive={currentPage === page}
                   >
                     {page}
@@ -100,7 +100,7 @@ export const PaginationPage: React.FC<Props> = ({
               </PaginationItem>
             ))}
         <PaginationItem>
-          <PaginationNext href='#' onClick={nextPage} />
+          <PaginationNext href='#' aria-disabled={currentPage >= totalPages} onClick={event => { event.preventDefault(); nextPage(); }} />
         </PaginationItem>
       </PaginationContent>
     </Pagination>

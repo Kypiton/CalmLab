@@ -2,7 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { Button } from '../ui/button';
 
 interface Props {
   children?: React.ReactNode;

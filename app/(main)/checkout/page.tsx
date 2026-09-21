@@ -7,13 +7,19 @@ import { useTotal } from '@/hooks/useTotal';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
+import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useRouter } from 'next/navigation';
+import { useCart } from '@/store/cart';
+import { toast } from 'sonner';
 
-interface Props {
-  className?: string;
-}
+const subscribeHydration = (callback: () => void) => useCart.persist.onFinishHydration(callback);
+const getHydration = () => useCart.persist.hasHydrated();
+const getServerHydration = () => false;
 
-export default function Checkout({ className }: Props) {
+export default function Checkout() {
+  const router = useRouter();
+  const hydrated = useSyncExternalStore(subscribeHydration, getHydration, getServerHydration);
+  const [isLoading, setIsLoading] = useState(false);
   const { total, subtotal, shipping, cartItems } = useTotal();
 
   const cartOfIdAndQuantity = cartItems.map(item => ({
@@ -21,21 +27,39 @@ export default function Checkout({ className }: Props) {
     quantity: item.quantity,
   }));
 
-  async function postCart() {
-    const response = await fetch('/api/checkout_sessions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(cartOfIdAndQuantity),
-    });
+  useEffect(() => {
+    if (hydrated && !cartItems.length) router.replace('/');
+  }, [hydrated, cartItems.length, router]);
 
-    const data = await response.json();
-    window.location.href = data.url;
+  async function postCart() {
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/checkout_sessions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cartOfIdAndQuantity),
+      });
+      const data = await response.json();
+      if (response.status === 401) {
+        router.push('/sign-in');
+        return;
+      }
+      if (!response.ok || typeof data.url !== 'string') {
+        throw new Error(data.error || 'Unable to start payment.');
+      }
+      window.location.assign(data.url);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to start payment.');
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  if (!cartItems.length) redirect('/');
+  if (!hydrated || !cartItems.length) return <p role="status">Loading cart…</p>;
 
   return (
-    <div className={cn('mt-10', className)}>
+    <div className={cn('mt-10')}>
       <h1 className='text-4xl font-extrabold text-primary text-center'>Checkout</h1>
       <div className='flex items-start justify-center gap-5 mt-5'>
         <div>
@@ -91,8 +115,8 @@ export default function Checkout({ className }: Props) {
             <p className='text-xl font-bold text-primary'>Total</p>
             <p>${total}</p>
           </div>
-          <Button className='w-full mt-2' onClick={postCart}>
-            Pay with stripe
+          <Button className='w-full mt-2' onClick={postCart} disabled={isLoading}>
+            {isLoading ? 'Opening payment…' : 'Pay with Stripe'}
           </Button>
           <Button variant='outline' className='mt-2'>
             <Link href='/'>Back to shopping</Link>

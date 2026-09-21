@@ -10,7 +10,7 @@ interface Props {
   data: { label: string; value: number }[];
 }
 
-export const PieChartComponent: React.FC<Props> = ({ className, data }) => {
+export const PieChartComponent: React.FC<Props> = ({ data }) => {
   const total = data.reduce((sum, item) => {
     return sum + item.value;
   }, 0);

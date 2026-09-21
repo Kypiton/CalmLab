@@ -1,16 +1,12 @@
 import { getCurrentUser } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
-interface Props {
-  className?: string;
-}
-
-export default async function Relax({ className }: Props) {
+export default async function Relax() {
   const user = await getCurrentUser();
 
   if (!user) {
     redirect('/sign-in');
   } else {
-    return <div className={className}>Relax</div>;
+    return <div>Relax</div>;
   }
 }

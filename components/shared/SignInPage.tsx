@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react';
 import React from 'react';
+import { toast } from 'sonner';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -22,7 +23,6 @@ export const SignInPage: React.FC<Props> = ({ className }) => {
   const [password, setPassword] = React.useState('');
   const [remember, setRemember] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isSuccess, setIsSuccess] = React.useState('');
   const [error, setError] = React.useState({
     email: '',
     password: '',
@@ -51,16 +51,15 @@ export const SignInPage: React.FC<Props> = ({ className }) => {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (!res.ok) {
-        throw new Error(`Error message: ${res.statusText}! status: ${res.status}`);
+        throw new Error(data.error || 'Unable to complete request.');
       }
 
-      setIsSuccess(data.message);
+      toast.success(data.message);
       router.push('/');
     } catch (error) {
-      console.error('Error during POST request:', error);
+      toast.error(error instanceof Error ? error.message : 'Unable to complete request.');
     } finally {
       setIsLoading(false);
     }
@@ -141,12 +140,12 @@ export const SignInPage: React.FC<Props> = ({ className }) => {
               Forgot your password?
             </a>
           </div>
-          <Button type='submit' className='w-full p-5 mt-4'>
+          <Button type='submit' className='w-full p-5 mt-4' disabled={isLoading}>
             Sign In
           </Button>
           <div className='mt-4 text-center'>
             <p>
-              Don't have an account?{' '}
+              Don&apos;t have an account?{' '}
               <Link href='/sign-up' className='text-primary'>
                 Sign up
               </Link>

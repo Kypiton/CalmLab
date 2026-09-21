@@ -9,6 +9,6 @@ interface Props {
 
 export const ClearCart: React.FC<Props> = ({ className }) => {
   const clearCart = useCart(state => state.clearCart);
-  clearCart();
+  React.useEffect(() => { clearCart(); }, [clearCart]);
   return <div className={className}></div>;
 };

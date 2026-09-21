@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogOut, Package, User } from 'lucide-react';
+import { LogOut, Package } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 

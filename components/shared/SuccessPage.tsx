@@ -1,3 +1,4 @@
+import type { PurchasedItem } from '@/lib/stripe-order';
 import { cn } from '@/lib/utils';
 import { Check, Flower2, Leaf, Mail, TreePalm } from 'lucide-react';
 
@@ -13,7 +14,9 @@ interface Props {
   className?: string;
   sessionId: string;
   customerEmail: string;
-  items: any[];
+  items: PurchasedItem[];
+  shipping: number;
+  total: number;
 }
 
 export const SuccessPage: React.FC<Props> = async ({
@@ -21,6 +24,8 @@ export const SuccessPage: React.FC<Props> = async ({
   sessionId,
   customerEmail,
   items,
+  shipping,
+  total,
 }) => {
   const brand_new_items = [
     ...items,
@@ -28,20 +33,14 @@ export const SuccessPage: React.FC<Props> = async ({
       id: 'delivery',
       title: 'Delivery',
       description: 'Delivery in 3-5 business days',
-      price: 4.99,
+      price: shipping,
+      quantity: 1,
       image:
         'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLXRydWNrLWljb24gbHVjaWRlLXRydWNrIj48cGF0aCBkPSJNMTQgMThWNmEyIDIgMCAwIDAtMi0ySDRhMiAyIDAgMCAwLTIgMnYxMWExIDEgMCAwIDAgMSAxaDIiLz48cGF0aCBkPSJNMTUgMThIOSIvPjxwYXRoIGQ9Ik0xOSAxOGgyYTEgMSAwIDAgMCAxLTF2LTMuNjVhMSAxIDAgMCAwLS4yMi0uNjI0bC0zLjQ4LTQuMzVBMSAxIDAgMCAwIDE3LjUyIDhIMTQiLz48Y2lyY2xlIGN4PSIxNyIgY3k9IjE4IiByPSIyIi8+PGNpcmNsZSBjeD0iNyIgY3k9IjE4IiByPSIyIi8+PC9zdmc+',
     },
   ];
 
-  const itemsWithQuantityNumber = brand_new_items.filter(item => typeof item.quantity === 'number');
-  const itemWithQuantityString = brand_new_items.filter(item => item.title === 'Delivery')[0];
-
-  const subtotal = itemsWithQuantityNumber.reduce(
-    (acc, item) => (acc += item.price * item.quantity),
-    0,
-  );
-  const total = (subtotal + itemWithQuantityString.price).toFixed(2);
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <div className={cn('m-auto max-w-8/12 py-5', className)}>
@@ -79,8 +78,7 @@ export const SuccessPage: React.FC<Props> = async ({
                   <div className='flex flex-col gap-2'>
                     <p className='font-bold'>{item.title}</p>
                     <p className='text-gray-500'>
-                      {item.quantity ? 'Quantity:' : ''}{' '}
-                      {item.quantity ? item.quantity : item.description}
+                      {item.id === 'delivery' ? 'Delivery in 3-5 business days' : `Quantity: ${item.quantity}`}
                     </p>
                   </div>
                 </div>
@@ -100,12 +98,12 @@ export const SuccessPage: React.FC<Props> = async ({
           </div>
           <div className='flex items-center justify-between mt-4 text-gray-700'>
             <p>Shipping</p>
-            <p>${itemWithQuantityString.price}</p>
+            <p>${shipping.toFixed(2)}</p>
           </div>
           <Separator className='mt-2' />
           <div className='flex items-center justify-between text-primary font-bold mt-2'>
             <p>Total paid</p>
-            <p>${total}</p>
+            <p>${total.toFixed(2)}</p>
           </div>
         </div>
       </div>
@@ -118,29 +116,29 @@ export const SuccessPage: React.FC<Props> = async ({
             <p className='font-bold'>Check your email</p>
           </div>
           <p className='mt-4'>
-            We've sent your order confirmation to <br />
+            Your order email is <br />
             <a href={`mailto:${customerEmail}`} className='text-primary font-bold'>
               {customerEmail}
             </a>
           </p>
-          <p className='mt-4'>If you don't see it, check your spam folder.</p>
+          <p className='mt-4'>If you don&apos;t see it, check your spam folder.</p>
         </div>
         <div className='bg-white p-8 rounded-xl shadow-2xl flex-1'>
           <div className='flex items-center gap-4'>
             <div className='p-4 rounded-full bg-green-200'>
               <TreePalm />
             </div>
-            <p className='font-bold'>What's next?</p>
+            <p className='font-bold'>What&apos;s next?</p>
           </div>
           <ul className='mt-4 list-none'>
             <li className='flex items-center gap-2'>
               <Check color='green' />
-              <p>We're preparing your order</p>
+              <p>We&apos;re preparing your order</p>
             </li>
             <li className='flex items-start gap-2'>
               <Check color='green' />
               <p>
-                You'll receive a shipping confirmation <br /> with tracking details
+                You&apos;ll receive a shipping confirmation <br /> with tracking details
               </p>
             </li>
             <li className='flex items-start gap-2'>
@@ -165,7 +163,7 @@ export const SuccessPage: React.FC<Props> = async ({
           </p>
         </div>
         <div className='flex flex-col'>
-          <p className='font-bold'>Need help? We're here for you.</p>
+          <p className='font-bold'>Need help? We&apos;re here for you.</p>
           <p className='text-gray-600'>
             Email us at{' '}
             <a href='mailto:partytimeyep@gmail.com' className='text-primary font-bold'>

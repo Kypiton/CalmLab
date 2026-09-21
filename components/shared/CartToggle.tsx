@@ -41,7 +41,7 @@ export const CartToggle: React.FC<Props> = ({ className }) => {
             <ShoppingCartIcon size={20} className='cursor-pointer' />
           </Button>
         </DrawerTrigger>
-        <DrawerContent>
+        <DrawerContent className={className}>
           <DrawerHeader className='flex'>
             <DrawerTitle>Shopping Cart</DrawerTitle>
             <DrawerDescription>Number of products: {cartItems.length}</DrawerDescription>
@@ -109,7 +109,7 @@ export const CartToggle: React.FC<Props> = ({ className }) => {
                 href='/checkout'
                 className={`block ${!cartItems.length ? 'cursor-not-allowed' : ''}`}
                 onClick={e => {
-                  !cartItems.length ? e.preventDefault() : undefined;
+                  if (!cartItems.length) e.preventDefault();
                 }}
               >
                 <Button className='w-full' disabled={!cartItems.length}>

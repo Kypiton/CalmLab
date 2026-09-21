@@ -13,7 +13,7 @@ interface Props {
   sortOption: string;
 }
 
-export const Category: React.FC<Props> = ({ className, activeTab, sortOption }) => {
+export const Category: React.FC<Props> = ({ activeTab, sortOption }) => {
   const router = useRouter();
   return (
     <div className='flex items-center gap-1'>

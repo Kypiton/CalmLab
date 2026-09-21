@@ -11,7 +11,7 @@ interface Props {
 
 export const Counter: React.FC<Props> = ({ className, value, onDecrement, onIncrement }) => {
   return (
-    <div className='flex items-center'>
+    <div className={`flex items-center ${className || ''}`}>
       <Button variant='default' onClick={() => onDecrement(1)} disabled={value <= 1}>
         -
       </Button>

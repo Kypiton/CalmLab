@@ -3,11 +3,7 @@ import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
 import { AllProductsClient } from '@/components/shared/AllProductsClient';
 
-interface Props {
-  className?: string;
-}
-
-export default async function AllProducts({ className }: Props) {
+export default async function AllProducts() {
 
   const user = await getCurrentUser();
   const products = await prisma.product.findMany();
@@ -16,7 +12,7 @@ export default async function AllProducts({ className }: Props) {
     redirect('/sign-in');
   } else {
     return (
-      <div className={className}>
+      <div>
         <AllProductsClient products={products} />
       </div>
     );

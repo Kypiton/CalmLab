@@ -72,7 +72,7 @@ export const ProductsAdmin: React.FC<Props> = ({ className, products }) => {
         <tbody>
           {newProducts.map((product: Product) => {
             let categories: string;
-            let statuses = 'bg-green-200 text-green-600';
+            const statuses = 'bg-green-200 text-green-600';
 
             switch (product.category) {
               case 'focus':

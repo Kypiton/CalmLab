@@ -6,8 +6,11 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
 	try {
 		const data: { email: string, password: string } = await req.json();
-		let { email, password } = data;
-		email = email.toLowerCase().trim()
+        if (!data || typeof data.email !== 'string' || typeof data.password !== 'string') {
+            return NextResponse.json({ error: 'Invalid fields.' }, { status: 400 });
+        }
+        const { password } = data;
+        const email = data.email.toLowerCase().trim();
 
 		if (!email || !password) {
 			return NextResponse.json({ error: 'Missing fields.' }, { status: 400 });
@@ -32,7 +35,7 @@ export async function POST(req: NextRequest) {
 				name: 'Auth-token',
 				value: token,
 				httpOnly: true,
-				secure: true,
+				secure: process.env.NODE_ENV === 'production',
 				sameSite: 'lax',
 				path: '/',
 				maxAge: 60 * 60 * 24 * 7
@@ -45,6 +48,7 @@ export async function POST(req: NextRequest) {
 		}
 
 	} catch (error) {
-		return NextResponse.json({ error }, { status: 500 });
+		console.error('Authentication request failed:', error);
+        return NextResponse.json({ error: 'Unable to complete request.' }, { status: 500 });
 	}
 }
