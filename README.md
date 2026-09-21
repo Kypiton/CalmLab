@@ -141,7 +141,6 @@ npm run dev
 
 ## 🚧 Future Improvements
 
-- Automated tests
 - CI/CD workflow
 - Improved error handling and logging
 - Additional payment edge-case handling
@@ -156,3 +155,31 @@ Frontend Developer focused on **React, Next.js and TypeScript**.
 
 - GitHub: https://github.com/Kypiton
 - LinkedIn: https://www.linkedin.com/in/dan-glushchenko-b87253245/
+
+
+## Tests
+
+The test suite uses Vitest, React Testing Library and jsdom. Verified with Node.js 20.20.0.
+
+```bash
+npm ci
+npm test                 # Run all tests once
+npm run test:watch       # Re-run affected tests while editing
+npm run test:coverage    # Generate coverage/index.html and an LCOV report
+npm test -- tests/unit/jwt.test.ts  # Run one test file
+```
+
+- `tests/unit/`: cart input validation, JWT and current user, authentication/API handlers,
+  order access, Stripe snapshots/webhooks, email escaping and upload access.
+- `tests/components/`: cart persistence and totals, catalog search/sort/pagination,
+  and sign-in feedback/loading states with real React state and DOM interactions.
+- `tests/setup.ts`: blocks unexpected fetch calls; service modules are mocked in each test.
+- `vitest.config.mts`: path aliases, automatic mock cleanup and coverage settings.
+
+Tests do not require `.env`, a database, or real Stripe/Resend credentials. They do not
+send emails or create payments. Coverage is measured for the selected business logic
+and UI modules listed in the configuration, not for the entire application.
+
+The success-page tests cover access checks by calling the function directly; they do
+not render async Server Components. Full Next.js rendering, real service integrations
+and browser journeys need separate integration/E2E tests.
